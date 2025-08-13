@@ -1,3 +1,7 @@
+import logging
+logging.basicConfig(level=logging.INFO)  
+
+import os
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -8,8 +12,7 @@ import time
 app = Flask(__name__)
 CORS(app)
 
-# Load precomputed data
-# Make sure you have these saved from your notebook before running Flask
+
 recommendation = pickle.load(open('model/movie_list.pkl', 'rb'))
 similarity = pickle.load(open('model/similarity.pkl', 'rb'))
 
@@ -38,7 +41,7 @@ def recommend(movie):
     movie_index = recommendation[recommendation['title'] == movie].index[0]
     distances = similarity[movie_index]
 
-    # include the selected movie itself in recommendations
+    
     movies_list = sorted(
         list(enumerate(distances)),
         reverse=True,
@@ -61,7 +64,7 @@ def recommend(movie):
         movie_ids.append(movie_id)
         poster_urls.append(fetch_poster(movie_id))
 
-    # print(f"Selected movie poster: {fetch_poster(selected_id)}")  # commented out
+    
     print(f"Recommended movies (console log format): {recommended_console_log}")
     return {
         "movies": movie_titles,
@@ -89,11 +92,14 @@ def movies_endpoint():
     titles = recommendation['title'].tolist()
     return jsonify({'movies': titles})
 
-if __name__ == '__main__':
-    app.run(debug=True), 
+# Add a root route to test
+@app.route("/")
+def home():
+    return "Movie Recommender Backend is running!"
 
-
-
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Render sets PORT
+    app.run(host="0.0.0.0", port=port)
 
 
 
