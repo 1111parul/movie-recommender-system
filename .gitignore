@@ -1,0 +1,15 @@
+# Python venv
+backend/venv/
+
+# Node modules
+frontend/node_modules/
+
+# Python cache
+__pycache__/
+
+# OS files
+.DS_Store
+
+# Large data files (if not using Git LFS)
+*.pkl
+*.csv
