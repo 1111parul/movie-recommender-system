@@ -39,7 +39,15 @@ const Recommendations = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center p-6">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center p-6 relative">
+      <div className="absolute top-4 right-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow"
+          onClick={() => navigate("/")}
+        >
+          Choose Another Movie
+        </button>
+      </div>
       <h1 className="text-3xl font-bold mb-6">Selected movie</h1>
       <div className="mb-8">
         <Card
