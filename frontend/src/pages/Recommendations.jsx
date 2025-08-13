@@ -1,9 +1,19 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../context/MovieContext";
 import Card from "../components/Card";
 
 const Recommendations = () => {
   const { selectedMovie, recommendations, loading } = useContext(MovieContext);
+  const navigate = useNavigate();
+  const { setSelectedMovie, setRecommendations, loading } = useContext(MovieContext);
+
+  const handleGoBack = () => {
+  setSelectedMovie(null);
+  setRecommendations({});
+  navigate("/");
+  };
+
 
   // Log selected movie with ID
   if (recommendations.selected_title && recommendations.selected_id) {
@@ -18,6 +28,15 @@ const Recommendations = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="absolute top-4 right-4">
+          <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
+          onClick={handleGoBack}
+          >
+          Choose Another Movie
+          </button>
+
+        </div>
         <div className="text-2xl">Loading recommendations...</div>
       </div>
     );
@@ -29,10 +48,17 @@ const Recommendations = () => {
     !recommendations.movies ||
     !recommendations.posters ||
     recommendations.movies.length === 0 
-
     ) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="absolute top-4 right-4">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow"
+            onClick={() => navigate("/")}
+          >
+            Choose Another Movie
+          </button>
+        </div>
         <h2 className="text-xl">No recommendations available. Go back and choose a movie.</h2>
       </div>
     );
@@ -42,7 +68,7 @@ const Recommendations = () => {
     <div className="min-h-screen bg-black text-white flex flex-col items-center p-6 relative">
       <div className="absolute top-4 right-4">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
           onClick={() => navigate("/")}
         >
           Choose Another Movie
