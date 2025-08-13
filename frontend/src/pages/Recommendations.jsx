@@ -6,7 +6,7 @@ import Card from "../components/Card";
 const Recommendations = () => {
   const { selectedMovie, recommendations, loading } = useContext(MovieContext);
   const navigate = useNavigate();
-  const { setSelectedMovie, setRecommendations, loading } = useContext(MovieContext);
+  const { setSelectedMovie, setRecommendations } = useContext(MovieContext);
 
   const handleGoBack = () => {
   setSelectedMovie(null);
