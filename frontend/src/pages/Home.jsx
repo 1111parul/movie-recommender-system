@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/movies")
+    fetch("https://movie-recommender-system-backend.onrender.com/movies")
       .then((res) => res.json())
       .then((data) => setMovieList(data.movies))
       .catch(console.error);
@@ -20,7 +20,7 @@ const Home = () => {
     setLoading(true);
     setSelectedMovie(selected);
     navigate("/recommendations");
-    fetch(`http://localhost:5000/recommend?movie=${encodeURIComponent(selected)}`)
+    fetch(`https://movie-recommender-system-backend.onrender.com/recommend?movie=${encodeURIComponent(selected)}`)
       .then((res) => res.json())
       .then((data) => {
         setRecommendations({
